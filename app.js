@@ -94,8 +94,6 @@ function renderComics() {
   });
 
   grid.innerHTML = "";
-grid.innerHTML = "";
-
 filtered.forEach(comic => {
   filtered.forEach(comic => {
     const card = document.createElement("article");
