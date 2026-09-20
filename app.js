@@ -194,3 +194,4 @@ document.addEventListener(
 );
 
 renderComics();
+console.log("DC HQ HUB FUNCIONANDO");
