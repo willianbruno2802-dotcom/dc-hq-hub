@@ -1,49 +1,196 @@
 const comics = [
- {title:"Superman", series:"Action Comics", issue:"#1", year:"1938", era:"golden", icon:"SUPERMAN"},
- {title:"Batman", series:"Detective Comics", issue:"#27", year:"1939", era:"golden", icon:"BATMAN"},
- {title:"Justice League", series:"Justice League", issue:"#1", year:"1960", era:"silver", icon:"JUSTICE\nLEAGUE"},
- {title:"Green Lantern", series:"Green Lantern", issue:"#1", year:"1960", era:"silver", icon:"GREEN\nLANTERN"},
- {title:"Wonder Woman", series:"Wonder Woman", issue:"#1", year:"1942", era:"golden", icon:"WONDER\nWOMAN"},
- {title:"The Flash", series:"The Flash", issue:"#123", year:"1961", era:"silver", icon:"THE\nFLASH"},
- {title:"Batman", series:"The Dark Knight Returns", issue:"Vol. 1", year:"1986", era:"modern", icon:"DARK\nKNIGHT"},
- {title:"Superman", series:"All-Star Superman", issue:"Vol. 1", year:"2005", era:"modern", icon:"ALL-STAR\nSUPERMAN"}
+  {
+    title: "Superman",
+    series: "Action Comics",
+    issue: "#1",
+    year: "1938",
+    era: "golden",
+    icon: "SUPERMAN"
+  },
+  {
+    title: "Batman",
+    series: "Detective Comics",
+    issue: "#27",
+    year: "1939",
+    era: "golden",
+    icon: "BATMAN"
+  },
+  {
+    title: "Justice League",
+    series: "Justice League",
+    issue: "#1",
+    year: "1960",
+    era: "silver",
+    icon: "JUSTICE<br>LEAGUE"
+  },
+  {
+    title: "Green Lantern",
+    series: "Green Lantern",
+    issue: "#1",
+    year: "1960",
+    era: "silver",
+    icon: "GREEN<br>LANTERN"
+  },
+  {
+    title: "Wonder Woman",
+    series: "Wonder Woman",
+    issue: "#1",
+    year: "1942",
+    era: "golden",
+    icon: "WONDER<br>WOMAN"
+  },
+  {
+    title: "The Flash",
+    series: "The Flash",
+    issue: "#123",
+    year: "1961",
+    era: "silver",
+    icon: "THE<br>FLASH"
+  },
+  {
+    title: "Batman",
+    series: "The Dark Knight Returns",
+    issue: "Vol. 1",
+    year: "1986",
+    era: "modern",
+    icon: "DARK<br>KNIGHT"
+  },
+  {
+    title: "Superman",
+    series: "All-Star Superman",
+    issue: "Vol. 1",
+    year: "2005",
+    era: "modern",
+    icon: "ALL-STAR<br>SUPERMAN"
+  }
 ];
 
-const grid = document.querySelector("#grid");
-const search = document.querySelector("#search");
-const era = document.querySelector("#era");
-const empty = document.querySelector("#empty");
-const reader = document.querySelector("#reader");
-const readerTitle = document.querySelector("#readerTitle");
-const pageTitle = document.querySelector("#pageTitle");
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const era = document.getElementById("era");
+const empty = document.getElementById("empty");
 
-function render(){
-  const q = search.value.toLowerCase().trim();
-  const e = era.value;
-  const list = comics.filter(c =>
-    (!q || `${c.title} ${c.series} ${c.issue}`.toLowerCase().includes(q)) &&
-    (e === "all" || c.era === e)
-  );
-  grid.innerHTML = list.map((c,i)=>`
-    <article class="comic" data-index="${comics.indexOf(c)}">
-      <div class="cover"><span>${c.icon.replace("\n","<br>")}</span></div>
-      <div class="comic-info">
-        <h3>${c.series}</h3>
-        <p>${c.title} · ${c.issue}</p>
-        <div class="comic-meta"><span>${c.year}</span><span>♡ Favoritar</span></div>
+const reader = document.getElementById("reader");
+const readerTitle = document.getElementById("readerTitle");
+const pageTitle = document.getElementById("pageTitle");
+
+function renderComics() {
+  const query = search.value.toLowerCase().trim();
+  const selectedEra = era.value;
+
+  const filtered = comics.filter(comic => {
+    const text = `
+      ${comic.title}
+      ${comic.series}
+      ${comic.issue}
+      ${comic.year}
+    `.toLowerCase();
+
+    const matchesSearch = !query || text.includes(query);
+    const matchesEra =
+      selectedEra === "all" || comic.era === selectedEra;
+
+    return matchesSearch && matchesEra;
+  });
+
+  grid.innerHTML = "";
+
+  filtered.forEach(comic => {
+    const card = document.createElement("article");
+    card.className = "comic";
+
+    card.innerHTML = `
+      <div class="cover">
+        <span>${comic.icon}</span>
       </div>
-    </article>`).join("");
-  empty.hidden = list.length !== 0;
-  document.querySelectorAll(".comic").forEach(card=>card.addEventListener("click",()=>{
-    const c=comics[Number(card.dataset.index)];
-    readerTitle.textContent=`${c.series} ${c.issue}`;
-    pageTitle.textContent=c.series;
-    reader.classList.add("open");
-    reader.setAttribute("aria-hidden","false");
-  }));
+
+      <div class="comic-info">
+        <h3>${comic.series}</h3>
+
+        <p>
+          ${comic.title} · ${comic.issue}
+        </p>
+
+        <div class="comic-meta">
+          <span>${comic.year}</span>
+          <span>♡ Favoritar</span>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener("click", () => {
+      openReader(comic);
+    });
+
+    grid.appendChild(card);
+  });
+
+  empty.hidden = filtered.length !== 0;
 }
-search.addEventListener("input",render); era.addEventListener("change",render);
-document.querySelector("#focusSearch").onclick=()=>{document.querySelector("#catalogo").scrollIntoView(); setTimeout(()=>search.focus(),500)};
-document.querySelector("#closeReader").onclick=()=>{reader.classList.remove("open");reader.setAttribute("aria-hidden","true")};
-document.addEventListener("keydown",e=>{if(e.key==="Escape") document.querySelector("#closeReader").click()});
-render();
+
+function openReader(comic) {
+  readerTitle.textContent =
+    `${comic.series} ${comic.issue}`;
+
+  pageTitle.textContent =
+    comic.series;
+
+  reader.classList.add("open");
+
+  reader.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+}
+
+function closeReader() {
+  reader.classList.remove("open");
+
+  reader.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+}
+
+search.addEventListener(
+  "input",
+  renderComics
+);
+
+era.addEventListener(
+  "change",
+  renderComics
+);
+
+document
+  .getElementById("focusSearch")
+  .addEventListener("click", () => {
+
+    document
+      .getElementById("catalogo")
+      .scrollIntoView();
+
+    setTimeout(() => {
+      search.focus();
+    }, 500);
+  });
+
+document
+  .getElementById("closeReader")
+  .addEventListener(
+    "click",
+    closeReader
+  );
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (event.key === "Escape") {
+      closeReader();
+    }
+
+  }
+);
+
+renderComics();
