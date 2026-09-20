@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DC HQ Hub — catálogo de histórias em quadrinhos, leitura digital e biblioteca pessoal.">
+  <title>DC HQ Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">DC</span><span>HQ HUB</span></a>
+    <nav>
+      <a href="#inicio">Início</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#personagens">Personagens</a>
+      <a href="#sobre">Sobre</a>
+    </nav>
+    <button class="search-btn" id="focusSearch">⌕ Buscar</button>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-content">
+        <p class="eyebrow">BIBLIOTECA DIGITAL</p>
+        <h1>Seu universo de<br><span>HQs em um só lugar.</span></h1>
+        <p class="hero-copy">Organize, descubra e leia sua coleção de quadrinhos em uma interface feita para fãs.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#catalogo">Explorar catálogo</a>
+          <a class="btn ghost" href="#sobre">Como funciona</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="moon"></div>
+        <div class="city"></div>
+        <div class="hero-card card-a">SUPERMAN</div>
+        <div class="hero-card card-b">BATMAN</div>
+        <div class="hero-card card-c">JUSTICE<br>LEAGUE</div>
+      </div>
+    </section>
+
+    <section class="section" id="catalogo">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">BIBLIOTECA</p>
+          <h2>Catálogo</h2>
+        </div>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Buscar HQ, personagem ou série...">
+          <select id="era">
+            <option value="all">Todas as eras</option>
+            <option value="golden">Golden Age</option>
+            <option value="silver">Silver Age</option>
+            <option value="bronze">Bronze Age</option>
+            <option value="modern">Modern Age</option>
+          </select>
+        </div>
+      </div>
+      <div id="grid" class="comic-grid"></div>
+      <p id="empty" class="empty" hidden>Nenhuma HQ encontrada.</p>
+    </section>
+
+    <section class="section dark-section" id="personagens">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">UNIVERSO</p>
+          <h2>Personagens</h2>
+        </div>
+      </div>
+      <div class="character-grid">
+        <article><span>🦸</span><h3>Superman</h3><p>O Homem de Aço</p></article>
+        <article><span>🦇</span><h3>Batman</h3><p>O Cavaleiro das Trevas</p></article>
+        <article><span>💚</span><h3>Lanterna Verde</h3><p>Guardiões do universo</p></article>
+        <article><span>⚡</span><h3>Flash</h3><p>O homem mais rápido</p></article>
+        <article><span>🛡️</span><h3>Mulher-Maravilha</h3><p>Princesa de Themyscira</p></article>
+        <article><span>🌊</span><h3>Aquaman</h3><p>Rei de Atlântida</p></article>
+      </div>
+    </section>
+
+    <section class="section about" id="sobre">
+      <p class="eyebrow">PROJETO</p>
+      <h2>Feito para uma biblioteca de HQs</h2>
+      <p>Este projeto já vem com catálogo, pesquisa, filtros, favoritos, progresso de leitura e uma interface preparada para você conectar seus próprios arquivos ou uma fonte de conteúdo licenciada.</p>
+      <div class="notice"><strong>Importante:</strong> use apenas HQs que você possui, conteúdo de domínio público ou material para o qual tenha autorização/licença de distribuição.</div>
+    </section>
+  </main>
+
+  <footer>
+    <span>DC HQ Hub — projeto de biblioteca independente.</span>
+    <span>Não afiliado à DC.</span>
+  </footer>
+
+  <div class="reader" id="reader" aria-hidden="true">
+    <div class="reader-top"><button id="closeReader">← Voltar</button><span id="readerTitle"></span><button id="favReader">♡</button></div>
+    <div class="reader-body">
+      <div class="fake-page"><div class="page-label">ÁREA DO LEITOR</div><h2 id="pageTitle">Sua HQ aparecerá aqui</h2><p>Conecte um arquivo PDF/CBZ ou uma fonte licenciada para transformar esta área em um leitor real.</p></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
