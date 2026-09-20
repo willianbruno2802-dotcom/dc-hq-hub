@@ -96,8 +96,6 @@ function renderComics() {
   grid.innerHTML = "";
 grid.innerHTML = "";
 
-grid.innerHTML = "<h2>TESTE — O GRID ESTÁ FUNCIONANDO</h2>";
-
 filtered.forEach(comic => {
   filtered.forEach(comic => {
     const card = document.createElement("article");
